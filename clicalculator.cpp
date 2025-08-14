@@ -29,7 +29,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include<iostream>
+#include <cstdlib>
+#include <iostream>
 
 // Function declarations
 void help(const std::string& PROGRAM_NAME); // & means pass by referance not by value
@@ -120,7 +121,7 @@ int main(int argc, char *argv[]){ // char *argv[] == pointers to strings, argc i
 double math(char op, char*argv[], int argc){
   if(!isValidNumber(argv[2])){
     std::cerr << "Invalid input: " << argv[2] << " is not a number, silly!\n";
-    return -1;
+    exit(EXIT_FAILURE); // Force quit program
   }
 
   double result = std::atof(argv[2]); // Due to the way I changed the for loop, result has to indiscriminately be 
@@ -148,9 +149,9 @@ double math(char op, char*argv[], int argc){
         result -= number;
         break;
       case '/':
-        if(number == 0){
-          std::cout << "Cannot divide number by 0, program exitting...\n";
-          return -1;
+        if(number == 0 or result == 0){
+          std::cerr << "\nERROR: Cannot divide number by 0, program exitting...\n";
+          exit(EXIT_FAILURE); // Force quit program
         }
         result /= number;
         break;
